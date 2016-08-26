@@ -20,6 +20,7 @@ class Postgresql < Formula
   option "without-perl", "Build without Perl support"
   option "without-tcl", "Build without Tcl support"
   option "with-dtrace", "Build with DTrace support"
+  option "with-gettext", "Build with localized error messages (nls)"
 
   deprecated_option "no-perl" => "without-perl"
   deprecated_option "no-tcl" => "without-tcl"
@@ -31,6 +32,7 @@ class Postgresql < Formula
 
   option "with-python", "Enable PL/Python2"
   depends_on :python => :optional
+  depends_on "gettext" => :optional
 
   option "with-python3", "Enable PL/Python3 (incompatible with --with-python)"
   depends_on :python3 => :optional
@@ -69,6 +71,7 @@ class Postgresql < Formula
     ]
 
     args << "--with-perl" if build.with? "perl"
+    args << "--enable-nls" if build.with? "gettext"
 
     which_python = nil
     if build.with?("python") && build.with?("python3")
